@@ -1,0 +1,1 @@
+psql "host=$DB_HOST port=$DB_PORT dbname=acme user=acmeadmin password=AcmePass123!"

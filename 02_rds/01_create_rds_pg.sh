@@ -1,0 +1,12 @@
+aws rds create-db-instance \
+  --db-instance-identifier acme-postgres \
+  --engine postgres \
+  --engine-version 16 \
+  --db-instance-class db.t3.micro \
+  --allocated-storage 20 \
+  --master-username acmeadmin \
+  --master-user-password "AcmePass123!" \
+  --db-name acme \
+  --backup-retention-period 7 \
+  --multi-az \
+  --no-publicly-accessible

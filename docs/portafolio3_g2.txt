@@ -1,0 +1,177 @@
+﻿Evaluación del módulo #4
+Infraestructura Viva para "Soluciones 
+Digitales ACME"
+
+
+introducción
+
+
+El presente portafolio desarrolla la propuesta “Infraestructura Viva”, orientada a modernizar la infraestructura tecnológica de Soluciones Digitales ACME mediante una migración progresiva desde un entorno on-premise hacia una arquitectura basada en servicios cloud. Para esto, se abordan los principales componentes vistos durante el módulo: almacenamiento en la nube, bases de datos relacionales y NoSQL, servicios de cómputo, red virtual, alojamiento web, monitoreo, notificaciones y mensajería.
+
+
+El desarrollo práctico se realizó utilizando Floci como entorno local de simulación de servicios AWS, permitiendo implementar y probar componentes cloud sin generar costos reales en una cuenta AWS. A través de esta herramienta se validaron configuraciones como buckets de almacenamiento, bases de datos, colas de mensajería, servicios de notificación y otros elementos representativos de una arquitectura cloud. De esta forma, el proyecto combina el diseño conceptual con una implementación práctica, segura y de bajo costo, alineada con los requerimientos del caso.
+Almacenamiento
+
+
+
+
+
+
+Bases de datos relacionales
+
+
+Para esta etapa del proyecto “Infraestructura Viva”, se implementó una base de datos relacional utilizando un entorno local basado en Floci, simulando el comportamiento de Amazon RDS. El objetivo fue representar una base de datos gestionada para almacenar información transaccional de la empresa Soluciones Digitales ACME, evitando el uso de infraestructura física y reduciendo costos de prueba.
+
+
+Se eligió PostgreSQL, ya que es una alternativa ampliamente utilizada, compatible con datos estructurados y adecuada para manejar información transaccional. La instancia fue creada con el identificador acme-postgres, una clase tipo db.t3.micro, 20 GB de almacenamiento y una base llamada acme.
+
+
+  
+
+Figura n: comando de creación de la instancia RDS.
+
+
+La configuración incluyó una retención de backups de 7 días mediante el parámetro backup-retention-period. Además, se consideró la opción Multi-AZ como referencia de alta disponibilidad, entendiendo que en un entorno real de AWS esta configuración permite aumentar la resiliencia de la base de datos frente a fallos de infraestructura. En Floci, esta configuración se utiliza principalmente como simulación y evidencia de diseño.
+
+
+  
+
+Figura N: comando describe-db-instances mostrando estado, motor, backup y Multi-AZ.
+
+
+Luego se obtuvo el endpoint de conexión de la base de datos y se realizó la conexión desde WSL2 utilizando el cliente psql. Esto permitió validar que la instancia relacional estaba disponible y lista para recibir operaciones SQL.
+
+
+  
+
+Figura N: conexión exitosa con psql.
+
+
+Para probar el funcionamiento de la base, se crearon dos tablas principales: clientes y tickets. La tabla clientes representa áreas internas de ACME, como ventas, soporte y finanzas. La tabla tickets permite registrar solicitudes o incidentes asociados a cada área, incluyendo estado, prioridad y fecha de creación.
+
+
+  
+
+Figura N: creación de tablas e inserción de datos.
+
+
+  
+
+Figura N: Selección de datos en tablas.
+
+
+También se generó un respaldo manual utilizando pg_dump, guardando una copia de la base en un archivo .sql. Esta acción complementa la configuración de backups y permite demostrar una estrategia básica de recuperación ante pérdida de datos.
+
+
+  
+
+Figura N: archivo de backup generado.
+
+
+Además, se realizaron pruebas de consultas SQL en SQLiteOnline, utilizando una versión simplificada del modelo relacional. Se ejecutaron consultas para listar clientes, filtrar tickets abiertos, unir información entre tablas, agrupar tickets por prioridad y ordenar registros por fecha. Estas pruebas permitieron validar la lógica de consulta y demostrar el uso de SQL sobre datos estructurados.
+
+
+  
+
+Figura N: consultas SQL ejecutadas en SQLiteOnline.
+
+
+Respecto a costos, al utilizar Floci la implementación no genera cobros reales, ya que todo se ejecuta localmente en Docker. En un escenario real de AWS, los costos dependerían principalmente del tipo de instancia RDS, almacenamiento aprovisionado, backups, uso de Multi-AZ y transferencia de datos.
+
+
+En cuanto a escalabilidad, la base relacional podría crecer verticalmente aumentando CPU, memoria o almacenamiento de la instancia. En una etapa más avanzada, también se podrían utilizar réplicas de lectura para descargar consultas y mejorar el rendimiento. De esta forma, la solución propuesta permite partir con una configuración simple y de bajo costo, pero con posibilidad de evolucionar según las necesidades de ACME.
+
+
+  
+
+Figura N: Configuración de base de datos en floci.
+Bases de datos NoSQL
+
+
+
+
+
+
+Servicios de cómputo
+
+
+
+
+
+
+Servicio de red en la nube
+
+
+
+
+
+
+Notificación y mensajería
+
+
+Primero se creó un tema SNS llamado acme-alertas-topic, el cual funciona como canal central para publicar eventos o alertas relevantes de la infraestructura. Este tema representa el punto desde donde se distribuyen notificaciones hacia uno o más suscriptores.
+  
+
+Figura N: tema SNS creado.
+
+
+Luego se creó una cola SQS llamada acme-alertas-queue, utilizada para recibir los mensajes enviados desde SNS. Esta cola permite que los mensajes queden disponibles hasta que otro servicio los procese, evitando una dependencia directa entre el sistema que genera la alerta y el sistema que la consume.
+
+
+  
+
+Figura N: cola SQS creada.
+
+
+Posteriormente, se creó una cola adicional llamada acme-alertas-dlq, utilizada como Dead Letter Queue. Esta cola sirve para almacenar mensajes que no pudieron ser procesados correctamente después de varios intentos. Con esto se implementa un patrón básico de reintentos y manejo de fallos.
+
+
+  
+
+Figura N: DLQ creada.
+
+
+Para conectar SNS con SQS, se aplicó una política de permisos sobre la cola principal, permitiendo que el tema SNS pudiera enviar mensajes hacia ella. Luego se creó la suscripción entre acme-alertas-topic y acme-alertas-queue, logrando que cada mensaje publicado en SNS fuera recibido automáticamente por SQS.
+
+
+  
+
+Figura N: suscripción SNS hacia SQS.
+
+
+Como prueba funcional, se publicó una alerta simulada de CPU alta desde SNS. El mensaje incluía información del servicio afectado, tipo de alerta, severidad y acción sugerida. Luego, el mensaje fue leído desde la cola SQS, comprobando que el flujo de mensajería funcionaba correctamente.
+
+
+  
+
+Figura N: mensaje publicado en SNS.
+
+
+  
+
+Figura N: mensaje recibido desde SQS.
+
+
+También se configuró una política de reintentos mediante RedrivePolicy, definiendo que los mensajes fallidos fueran enviados a la DLQ después de tres intentos. Esto permite mejorar la tolerancia a fallos, ya que los mensajes no procesados no se pierden, sino que quedan disponibles para revisión posterior.
+
+
+  
+
+Figura N: política RedrivePolicy configurada.
+
+
+Respecto a la integración con correo o servicios externos, en esta demo local se utilizó SQS como canal de mensajería funcional. En un ambiente real de AWS, el mismo tema SNS podría integrarse con correo electrónico, SMS, Lambda o endpoints HTTP/S para enviar alertas automáticas al equipo de soporte.
+
+
+
+
+Servicios simples de alojamiento web y contenidos
+
+
+
+
+Conclusión
+En conclusión, el proyecto “Infraestructura Viva” permitió diseñar y validar una propuesta integral de modernización cloud para Soluciones Digitales ACME. Mediante el uso de Floci, fue posible simular servicios similares a AWS y demostrar cómo una organización puede avanzar desde una infraestructura local hacia una solución más escalable, segura y flexible, sin depender inicialmente de recursos cloud pagados.
+
+
+La propuesta integra almacenamiento, bases de datos, cómputo, red, monitoreo y mensajería, cubriendo los principales requerimientos del módulo. Además, se aplicaron buenas prácticas como separación de servicios, respaldo de datos, control de acceso, políticas de reintentos, monitoreo y documentación de costos estimados. En general, este portafolio evidencia cómo los conceptos de tecnología cloud pueden aplicarse en un caso práctico, permitiendo construir una base sólida para futuras implementaciones reales en AWS u otros proveedores de nube.
