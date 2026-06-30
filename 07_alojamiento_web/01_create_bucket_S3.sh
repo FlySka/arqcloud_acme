@@ -1,0 +1,1 @@
+aws s3 mb s3://leccion_7 --endpoint-url=http://localhost:4566

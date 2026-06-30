@@ -1,0 +1,1 @@
+aws s3api put-object --bucket leccion_7 --key sitio_web/

@@ -1,0 +1,38 @@
+{
+  "CallerReference": "test-distribution-1",
+  "Comment": "Mi CDN local en Floci",
+  "Enabled": true,
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "S3-Leccion_7",
+        "DomainName": "leccion_7.localhost.localstack.cloud",
+        "S3OriginConfig": {
+          "OriginAccessIdentity": ""
+        }
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "S3-Leccion_7",
+    "ViewerProtocolPolicy": "allow-all",
+    "TrustedSigners": {
+      "Quantity": 0,
+      "Enabled": false
+    },
+    "ForwardedValues": {
+      "QueryString": false,
+      "Cookies": {
+        "Forward": "none"
+      },
+      "Headers": {
+        "Quantity": 0
+      },
+      "QueryStringCacheKeys": {
+        "Quantity": 0
+      }
+    },
+    "MinTTL": 0
+  }
+}
