@@ -20,7 +20,7 @@ Eso es todo. En una frase: construimos un edificio donde lo público y lo privad
 
 Una sola VPC con un tier público (expuesto a Internet, donde vive el balanceador) y un tier privado (donde vive la aplicación / base de datos, sin acceso directo desde Internet). El balanceador recibe el tráfico web y lo reparte hacia el backend privado.
 
-![Diagrama de implementación de red](./diagrama_implementacion_red.png)
+![Diagrama de implementación de red](./diagrama_implementacion_network.png)
 
 Este diseño cumple con:
 
