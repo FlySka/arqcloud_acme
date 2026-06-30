@@ -89,7 +89,7 @@ Validar que la página web se vea
 
 5. Ejecutar json y validar distribución ([04_dist_config.sh](./04_dist_config.sh)):
 ```
-aws cloudfront create-distribution --distribution-config file://dist-config.json --endpoint-url http://localhost:4566 --no-verify-ssl
+aws cloudfront create-distribution --distribution-config file://dist-config.json --endpoint-url http://localhost:4566
 ```
 
 ```
