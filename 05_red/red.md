@@ -59,7 +59,7 @@ El servicio de **VPN Site-to-Site** permite establecer un túnel IPSec seguro en
 ### Implementación en AWS (cli)
 
 Revisar implementación con scripts en repositorio:  
-[Implementación de la red](./network-implementation.sh)  
-[Limpieza de implementación](./remove-network.sh)
+- [Implementación de la red](./network-implementation.sh)  
+- [Limpieza de implementación](./remove-network.sh)
 
 En conclusión, el script implementa una VPC estructurada con niveles de seguridad diferenciados (público, aplicación privada y base de datos aislada), asegurando la conectividad de la capa privada mediante una instancia NAT. La arquitectura optimiza el tráfico hacia S3 y DynamoDB mediante el uso de Endpoints, sienta las bases para una base de datos RDS con configuración Multi-AZ y publica el servicio a través de un Load Balancer. Este diseño constituye el núcleo de red fundamental sobre el cual se desplegarán las instancias EC2 y los servicios gestionados de ACME.
