@@ -1,1 +1,0 @@
-{"ticketId":{"S":"TK-2026-0001"},"clienteId":{"S":"CL-001"},"departamento":{"S":"Ventas"},"categoria":{"S":"Software"},"prioridad":{"S":"Alta"},"estado":{"S":"Abierto"},"tecnico":{"S":"Carlos Perez"},"fechaCreacion":{"S":"2026-06-28"},"descripcion":{"S":"Error al iniciar sesion en el CRM"}}

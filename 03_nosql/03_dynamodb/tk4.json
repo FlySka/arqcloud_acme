@@ -1,0 +1,11 @@
+{
+  "ticketId":      {"S": "TK-2026-0004"},
+  "clienteId":     {"S": "CL-001"},
+  "departamento":  {"S": "Ventas"},
+  "categoria":     {"S": "Software"},
+  "prioridad":     {"S": "Critica"},
+  "estado":        {"S": "Abierto"},
+  "tecnico":       {"S": "Carlos Perez"},
+  "fechaCreacion": {"S": "2026-06-28"},
+  "descripcion":   {"S": "Sistema de ventas caido durante presentacion"}
+}

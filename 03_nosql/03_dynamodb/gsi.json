@@ -1,0 +1,17 @@
+[
+  {
+    "IndexName": "estado-index",
+    "KeySchema": [{"AttributeName": "estado", "KeyType": "HASH"}],
+    "Projection": {"ProjectionType": "ALL"}
+  },
+  {
+    "IndexName": "tecnico-index",
+    "KeySchema": [{"AttributeName": "tecnico", "KeyType": "HASH"}],
+    "Projection": {"ProjectionType": "ALL"}
+  },
+  {
+    "IndexName": "prioridad-index",
+    "KeySchema": [{"AttributeName": "prioridad", "KeyType": "HASH"}],
+    "Projection": {"ProjectionType": "ALL"}
+  }
+]
