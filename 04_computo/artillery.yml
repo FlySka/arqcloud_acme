@@ -1,0 +1,54 @@
+# artillery.yml — Prueba de escalabilidad avanzada
+# Instalar: npm install -g artillery
+# Ejecutar: artillery run artillery.yml --target http://TU-URL
+
+config:
+  # Reemplaza con la URL de tu ALB o Lambda
+  target: "http://REEMPLAZA-CON-TU-URL"
+  http:
+    timeout: 10
+  plugins:
+    metrics-by-endpoint: {}
+
+  # Fases de carga — simula tráfico real con rampa gradual
+  phases:
+    - name: "Calentamiento (1 min)"
+      duration: 60
+      arrivalRate: 5          # 5 usuarios/seg → carga ligera
+
+    - name: "Carga sostenida (2 min)"
+      duration: 120
+      arrivalRate: 20         # 20 usuarios/seg → activa Auto Scaling
+
+    - name: "Pico de carga (1 min)"
+      duration: 60
+      arrivalRate: 50         # 50 usuarios/seg → máxima presión
+
+    - name: "Enfriamiento (1 min)"
+      duration: 60
+      arrivalRate: 5          # Baja para observar scale-in
+
+scenarios:
+  - name: "GET página principal"
+    weight: 70
+    flow:
+      - get:
+          url: "/"
+          expect:
+            - statusCode: 200
+
+  - name: "GET health check"
+    weight: 20
+    flow:
+      - get:
+          url: "/health"
+          expect:
+            - statusCode: 200
+
+  - name: "GET Lambda con cálculo"
+    weight: 10
+    flow:
+      - get:
+          url: "/demo?n={{ $randomInt(100, 2000) }}"
+          expect:
+            - statusCode: 200
