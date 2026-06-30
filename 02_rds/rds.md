@@ -2,8 +2,6 @@
 
 Paso a paso usado para simular Amazon RDS con PostgreSQL en Floci.
 
-Antes de comenzar, Floci debe estar corriendo y la AWS CLI debe apuntar a `http://localhost:4566`.
-
 ## Pasos
 
 1. Crear la instancia PostgreSQL ([01_create_rds_pg.sh](./01_create_rds_pg.sh)):

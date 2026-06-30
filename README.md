@@ -6,13 +6,13 @@ El proyecto documenta una demo local de servicios tipo AWS usando Floci en Docke
 
 ## Capitulos
 
-1. **[01 - Almacenamiento](01_almacenamiento/almacenamiento.md)**
-2. **[02 - Bases de datos relacionales - RDS](02_rds/rds..md)**
-3. **[03 - Bases de datos NoSQL](03_nosql/nosql.md)**
-4. **[04 - Servicios de computo](04_computo/computo.md)**
-5. **[05 - Servicio de red en la nube](05_red/red.md)**
-6. **[06 - Notificacion y mensajeria](06_mensajeria/mensajeria.md)**
-7. **[07 - Alojamiento web y contenidos](07_alojamiento_web/alojamiento_web.md)** 
+1. **[Almacenamiento](01_almacenamiento/almacenamiento.md)**
+2. **[Bases de datos relacionales - RDS](02_rds/rds.md)**
+3. **[Bases de datos NoSQL](03_nosql/nosql.md)**
+4. **[Servicios de computo](04_computo/computo.md)**
+5. **[Servicio de red en la nube](05_red/red.md)**
+6. **[Notificacion y mensajeria](06_mensajeria/mensajeria.md)**
+7. **[Alojamiento web y contenidos](07_alojamiento_web/alojamiento_web.md)** 
 
 ## Requisitos
 
