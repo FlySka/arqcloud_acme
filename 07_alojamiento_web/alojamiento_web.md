@@ -38,10 +38,9 @@ aws s3api put-object --bucket leccion_7 --key sitio_web/
 ```
 
 Validar que la página web se vea
-
 ![Pagina Web OK](./pagina_web_ok.png)
 
-4. Debido a que no existe Cloud Front como tal en Floci, se debe crear un archivo json para configurar distribución ([dist_config.json](./dist-config.json)):
+4. Debido a que no existe Cloud Front como tal en Floci, se debe crear un archivo json para configurar distribución ([dist-config.json](./dist-config.json)):
 
 ```
 {
@@ -148,13 +147,13 @@ d. Se crea la red virtual para que se comuniquen entre sí ([05_virtual_network.
 docker network create floci-network
 ```
 
-e. Encender Floci en su modo nativo estable ([05_alpine.sh](./05_alpine.sh))
+e. Encender Floci en su modo nativo estable ([05_navite.sh](./05_native.sh))
 
 ```
  docker run -d --name floci-backend --network floci-network -p "4566:4566" -v floci-data:/var/lib/floci floci/floci:latest
 ```
 
-f. Encender Nginx, pasándole los certificados generados y la configuración ([05_alpine.sh](./05_alpine.sh))
+f. Encender Nginx, pasándole los certificados generados y la configuración ([05_nginx.sh](./05_nginx.sh))
 
 ```
  docker run -d --name nginx-proxy --network floci-network -p "4433:4433" -v "${PWD}/nginx.conf:/etc/nginx/nginx.conf:ro" -v "${PWD}/server.crt:/etc/nginx/certs/server.crt:ro" -v "${PWD}/server.key:/etc/nginx/certs/server.key:ro" nginx:alpine
