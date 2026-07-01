@@ -41,7 +41,7 @@ Validar que la página web se vea
 
 ![Pagina Web OK](./pagina_web_ok.png)
 
-4. Debido a que no existe Cloud Front como tal en Floci, se debe crear un archivo json para configurar distribución ([dist_config.json](./dist_config.json)):
+4. Debido a que no existe Cloud Front como tal en Floci, se debe crear un archivo json para configurar distribución ([dist_config.json](./dist-config.json)):
 
 ```
 {
