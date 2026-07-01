@@ -1,0 +1,1 @@
+ docker run -d --name floci-backend --network floci-network -p "4566:4566" -v floci-data:/var/lib/floci floci/floci:latest

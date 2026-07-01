@@ -1,0 +1,1 @@
+ docker run -d --name nginx-proxy --network floci-network -p "4433:4433" -v "${PWD}/nginx.conf:/etc/nginx/nginx.conf:ro" -v "${PWD}/server.crt:/etc/nginx/certs/server.crt:ro" -v "${PWD}/server.key:/etc/nginx/certs/server.key:ro" nginx:alpine

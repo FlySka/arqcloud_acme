@@ -1,0 +1,1 @@
+ docker run --rm -v "${PWD}:/export" alpine sh -c "apk add --no-cache openssl && openssl req -x509 -newkey rsa:4096 -keyout /export/server.key -out /export/server.crt -days 365 -nodes -subj '/CN=localhost'"
